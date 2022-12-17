@@ -41,3 +41,13 @@ services:
       - 30002:80
     depends_on:
       - db
+  npm:
+    image: node:lts-alpine
+    container_name: npm
+    volumes:
+      - ./src:/var/www/laravel
+    ports:
+      - 3000:3000
+      - 3001:3001
+    working_dir: /var/www/laravel
+    entrypoint: ['npm']
