@@ -2,22 +2,22 @@ services:
 
 
   # If you want to use Nginx instead of Caddy
-  #  nginx:
-  #    build:
-  #      context: .
-  #      dockerfile: ./docker/nginx/Dockerfile
-  #    container_name: nginx
-  #    ports:
-  #      - "80:80"
-  #      # xdebug
-  #      - "9001:9001"
-  #    volumes:
-  #      - ./:/var/www/html:delegated
-  #    depends_on:
-  #      - php
-  #      - db
-  #    networks:
-  #      - our-network
+   nginx:
+     build:
+       context: .
+       dockerfile: ./docker/nginx/Dockerfile
+     container_name: nginx
+     ports:
+       - "80:80"
+       # xdebug
+       - "9001:9001"
+     volumes:
+       - ./:/var/www/html:delegated
+     depends_on:
+       - php
+       - db
+     networks:
+       - our-network
 
   db:
     image: mariadb:latest
