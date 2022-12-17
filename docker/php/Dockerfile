@@ -2,7 +2,7 @@ FROM amazonlinux:latest
 
 RUN yum -y update
 
-RUN amazon-linux-extras install php8.0
+RUN amazon-linux-extras install php:8.1-fpm
 
 RUN yum install -y php-bz2 php-calendar php-ctype php-curl php-exif php-fileinfo php-ftp php-gettext php-iconv php-mysqlnd php-pdo php-phar php-sockets php-sqlite3 php-tokenizer php-zip php-mysqli php-pdo_mysql php-pdo_sqlite php-xml php-mbstring php-intl
 
