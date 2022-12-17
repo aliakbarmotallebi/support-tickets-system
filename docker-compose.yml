@@ -83,16 +83,3 @@ services:
       - ./:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['npm']
-
-  artisan:
-    build:
-      context: .
-      dockerfile: ./docker/php/Dockerfile
-    container_name: artisan
-    volumes:
-      - ./:/var/www/html:delegated
-    depends_on:
-      - db
-    working_dir: /var/www/html
-    user: laravel
-    entrypoint: ['php', '/var/www/html/artisan']
