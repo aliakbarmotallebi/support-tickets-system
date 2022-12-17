@@ -19,6 +19,8 @@ services:
     volumes:
       - ./:/var/www/html
     working_dir: /var/www/html
+    networks:
+      - docker_workspace_network
 
   composer:
     container_name: composer
@@ -27,7 +29,6 @@ services:
       - ./:/var/www/html
     working_dir: /var/www/html
     command: install
-
 
   mysql:
     image: mysql
@@ -41,6 +42,8 @@ services:
       - "3306:3306"
     volumes:
       - ./database/mysql:/var/lib/mysql
+    networks:
+      - docker_workspace_network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -52,6 +55,8 @@ services:
     restart: always
     ports:
       - 8085:80
+    networks:
+      - docker_workspace_network
 
   npm:
     image: node:alpine
@@ -60,3 +65,7 @@ services:
       - ./:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['npm']
+
+  networks:
+    docker_workspace_network:
+      driver: bridge

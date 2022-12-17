@@ -9,6 +9,6 @@ RUN docker-php-ext-install exif
 RUN docker-php-ext-install bcmath mbstring intl opcache
 RUN docker-php-ext-install pdo pdo_mysql mysqli
 
-RUN chmod 777 -R ./storage/ && \
+RUN chmod 777 -R storage/ && \
     chown -R www-data:www-data ./ && \
     a2enmod rewrite
