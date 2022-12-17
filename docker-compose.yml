@@ -27,7 +27,7 @@ services:
       - ./:/var/www/html
     working_dir: /var/www/html
     command: install
-    
+
 
   mysql:
     image: mysql:8.0.27
@@ -41,6 +41,7 @@ services:
       - "3306:3306"
     volumes:
       - ./database/mysql:/var/lib/mysql
+      
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
