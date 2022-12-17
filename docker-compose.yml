@@ -1,0 +1,43 @@
+version: '3'
+services:
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/laravel
+    working_dir: "/var/www/laravel"
+    depends_on:
+      - php
+  php:
+    build: ./docker/php
+    volumes:
+      - ./:/var/www/laravel
+    working_dir: "/var/www/laravel"
+    depends_on:
+      - db
+  redis:
+    image: "redis:latest"
+    volumes:
+      - "./docker/redis/data:/data"
+  mailhog:
+      image: mailhog/mailhog
+      ports:
+      - "30003:8025"
+  db:
+    image: mariadb:10.5.4
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tickets
+      MYSQL_USER: team
+      MYSQL_PASSWORD: 123456789@a
+      TZ: Asia/Tehran
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 30002:80
+    depends_on:
+      - db
