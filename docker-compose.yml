@@ -1,53 +1,127 @@
-version: '3'
 services:
-  nginx:
-    build: ./docker/nginx
+
+
+  # If you want to use Nginx instead of Caddy
+  #  nginx:
+  #    build:
+  #      context: .
+  #      dockerfile: ./docker/nginx/Dockerfile
+  #    container_name: nginx
+  #    ports:
+  #      - "80:80"
+  #      # xdebug
+  #      - "9001:9001"
+  #    volumes:
+  #      - ./:/var/www/html:delegated
+  #    depends_on:
+  #      - php
+  #      - db
+  #    networks:
+  #      - our-network
+
+  db:
+    image: mariadb:latest
+    container_name: db
+    restart: unless-stopped
+    tty: true
     ports:
-      - 80:80
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
     volumes:
-      - ./:/var/www/laravel
-    working_dir: "/var/www/laravel"
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+      - ./docker/db/my.cnf:/etc/mysql/my.cnf
+      - ./var/db/data:/var/lib/mysql/
+    networks:
+      - our-network
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - our-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8081:80"
+    volumes:
+      - /sessions
+    networks:
+      - our-network
+    links:
+      - db
+
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: php
+    volumes:
+      - ./:/var/www/html:delegated
+      # Enable xdebug
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    ports:
+      - "9000:9000"
+    networks:
+      - our-network
+
+  composer:
+    build:
+      context: .
+      dockerfile: ./docker/php/composer/Dockerfile
+    container_name: composer
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
     depends_on:
       - php
-  php:
-    build: ./docker/php
-    volumes:
-      - ./:/var/www/laravel
-    working_dir: "/var/www/laravel"
-    depends_on:
-      - db
-  redis:
-    image: "redis:latest"
-    volumes:
-      - "./docker/redis/data:/data"
-  mailhog:
-      image: mailhog/mailhog
-      ports:
-      - "30003:8025"
-  db:
-    image: mariadb:10.5.4
-    volumes:
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./docker/mysql/data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: tickets
-      MYSQL_USER: team
-      MYSQL_PASSWORD: 123456789@a
-      TZ: Asia/Tehran
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    ports:
-      - 30002:80
-    depends_on:
-      - db
+    user: laravel
+    networks:
+      - our-network
+    #    entrypoint: ['composer', '--ignore-platform-reqs']
+    entrypoint: ['composer']
+
   npm:
-    image: node:lts-alpine
+    image: node:alpine
     container_name: npm
     volumes:
-      - ./src:/var/www/laravel
-    ports:
-      - 3000:3000
-      - 3001:3001
-    working_dir: /var/www/laravel
+      - ./:/var/www/html
+    working_dir: /var/www/html
     entrypoint: ['npm']
+
+  artisan:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: artisan
+    volumes:
+      - ./:/var/www/html:delegated
+    depends_on:
+      - db
+    working_dir: /var/www/html
+    user: laravel
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - our-network
+
+networks:
+  our-network:
+    driver: bridge

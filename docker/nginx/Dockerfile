@@ -1,11 +1,10 @@
-FROM amazonlinux:2
+FROM nginx:stable-alpine
 
-RUN yum -y update
+ADD ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
+ADD ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
-RUN amazon-linux-extras install nginx1.12
+RUN mkdir -p /var/www/html
 
-# automatic start
-ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
+RUN addgroup -g 1000 laravel && adduser -G laravel -g laravel -s /bin/sh -D laravel
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx.conf /etc/nginx/nginx.conf
+RUN chown laravel:laravel /var/www/html
