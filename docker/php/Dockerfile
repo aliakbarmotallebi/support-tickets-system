@@ -9,5 +9,6 @@ RUN docker-php-ext-install exif
 RUN docker-php-ext-install bcmath mbstring intl opcache
 RUN docker-php-ext-install pdo pdo_mysql mysqli
 
+RUN a2enmod rewrite
 
 WORKDIR /var/www/html
