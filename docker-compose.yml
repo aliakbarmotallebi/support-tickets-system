@@ -30,24 +30,25 @@ services:
 
 
   mysql:
-    image: mysql:8.0.27
+    image: mysql
     container_name: mysql
     environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
     ports:
       - "3306:3306"
     volumes:
       - ./database/mysql:/var/lib/mysql
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin//phpmyadmin
     container_name: pma
     links:
       - mysql
     environment:
       PMA_HOST: mysql
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
     restart: always
     ports:
       - 8085:80
