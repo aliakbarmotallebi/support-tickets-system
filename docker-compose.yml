@@ -1,23 +1,16 @@
 services:
 
-
-  # If you want to use Nginx instead of Caddy
   nginx:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
     container_name: nginx
+    volumes:
+      - ./:/var/www/backend
+      - ./docker/nginx:/etc/nginx/conf.d
     ports:
       - "80:80"
-      # xdebug
       - "9001:9001"
-    volumes:
-      - ./:/var/www/html:delegated
-    depends_on:
-      - php
-      - db
-    networks:
-      - our-network
 
   db:
     image: mariadb:latest
@@ -37,17 +30,7 @@ services:
       - ./docker/db/sql:/docker-entrypoint-initdb.d
       - ./docker/db/my.cnf:/etc/mysql/my.cnf
       - ./var/db/data:/var/lib/mysql/
-    networks:
-      - our-network
 
-  redis:
-    image: "redis:alpine"
-    container_name: redis
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    networks:
-      - our-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -64,8 +47,6 @@ services:
       - "8081:80"
     volumes:
       - /sessions
-    networks:
-      - our-network
     links:
       - db
 
@@ -80,8 +61,6 @@ services:
       - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     ports:
       - "9000:9000"
-    networks:
-      - our-network
 
   composer:
     build:
@@ -94,8 +73,6 @@ services:
     depends_on:
       - php
     user: laravel
-    networks:
-      - our-network
     #    entrypoint: ['composer', '--ignore-platform-reqs']
     entrypoint: ['composer']
 
@@ -119,9 +96,3 @@ services:
     working_dir: /var/www/html
     user: laravel
     entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - our-network
-
-networks:
-  our-network:
-    driver: bridge
