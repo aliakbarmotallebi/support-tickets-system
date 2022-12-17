@@ -1,22 +1,10 @@
-FROM amazonlinux:latest
+FROM php:8.1-fpm-alpine
 
-RUN yum -y update
+RUN apt-get update && apt-get upgrade -y && apt-get install -y libpq-dev zlib1g-dev libicu-dev nano
 
-RUN amazon-linux-extras install php:81
+RUN docker-php-ext-install pdo pdo_mysql
 
-RUN yum install -y php-bz2 php-calendar php-ctype php-curl php-exif php-fileinfo php-ftp php-gettext php-iconv php-mysqlnd php-pdo php-phar php-sockets php-sqlite3 php-tokenizer php-zip php-mysqli php-pdo_mysql php-pdo_sqlite php-xml php-mbstring php-intl
+COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
 
-# xdebug install
-RUN yum install -y php-pear php-devel gcc make \
-  && pecl install xdebug
+RUN composer dump-autoload --optimize
 
-# use php-fpm default tcp
-EXPOSE 9000
-
-# run php-fpm in the foreground
-ENTRYPOINT /usr/sbin/php-fpm -F
-
-COPY ./www.conf /etc/php-fpm.d/www.conf
-COPY ./php.ini /etc/php.d/90_custom_php.ini
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
