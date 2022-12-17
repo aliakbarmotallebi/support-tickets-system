@@ -73,7 +73,7 @@ services:
     depends_on:
       - php
     user: laravel
-    #    entrypoint: ['composer', '--ignore-platform-reqs']
+      #  entrypoint: ['composer', '--ignore-platform-reqs']
     entrypoint: ['composer']
 
   npm:
