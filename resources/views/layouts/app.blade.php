@@ -48,5 +48,14 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(event) {
+            ClassicEditor
+            .create(document.querySelector('.ckeditor'))
+            .catch(error => {
+                console.log(`error`, error)
+            });
+        });
+    </script>
 </body>
 </html>

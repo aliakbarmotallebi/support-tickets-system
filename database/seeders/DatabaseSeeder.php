@@ -15,23 +15,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          \App\Models\User::factory()->create([
-             'name' => 'Admin User',
-             'email' => 'admin@admin.com',
+             'name' => 'Admin',
+             'mobile' => '09306193414',
          ]);
 
-         \App\Models\User::factory()->create([
-             'name' => 'Agent User',
-             'email' => 'agent@agent.com',
-         ]);
+        //  $this->call([
+        //      CategoriesSeeder::class,
+        //      LabelsSeeder::class,
+        //      RolesSeeder::class,
+        //  ]);
 
-         $this->call([
-             CategoriesSeeder::class,
-             LabelsSeeder::class,
-             RolesSeeder::class,
-         ]);
-
-         \App\Models\User::factory(10)
-             ->create()
-             ->each(fn ($user) => $user->assignRole('user'));
+        //  \App\Models\User::factory(10)
+        //      ->create()
+        //      ->each(fn ($user) => $user->assignRole('user'));
     }
 }

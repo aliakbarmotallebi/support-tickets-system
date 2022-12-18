@@ -28,7 +28,7 @@
                                 </x-input-label>
                 <textarea id="message"
                           name="message"
-                          class="mt-1 block h-32 w-full rounded-md border-gray-300 shadow-sm focus-within:text-primary-600 focus:border-primary-300 focus:ring-primary-200 focus:ring focus:ring-opacity-50"
+                          class="ckeditor mt-1 block h-32 w-full rounded-md border-gray-300 shadow-sm focus-within:text-primary-600 focus:border-primary-300 focus:ring-primary-200 focus:ring focus:ring-opacity-50"
                           required>{{ old('message', $ticket->message) }}</textarea>
                 <x-input-error :messages="$errors->get('message')" class="mt-2" />
             </div>

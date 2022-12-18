@@ -10,6 +10,7 @@ class MessageRequest extends FormRequest
     {
         return [
             'message' => ['required', 'string'],
+            'attachments' => ['nullable', 'array'],
         ];
     }
 

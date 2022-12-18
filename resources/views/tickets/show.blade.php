@@ -39,8 +39,6 @@
                 {{ $ticket->message }}
             </p>
         </div>
-
-
         @if($ticket->getMedia('tickets_attachments')->count())
             <div class="min-w-0 rounded-lg bg-white p-4 shadow-xs">
                 <h4 class="mb-4 font-semibold text-gray-600">
@@ -48,9 +46,16 @@
                 </h4>
 
                 @foreach($ticket->getMedia('tickets_attachments') as $media)
-                    <p>
+                    <div>
                         <a href="{{ route('attachment-download', $media) }}" class="hover:underline">{{ $media->file_name }}</a>
-                    </p>
+                        
+                        <span class="px-2 text-blue-500">
+                            <span class="text-sm px-1">
+                                تاریخ بارگذاری فایل:
+                            </span>
+                            {{ $media->created_at }}
+                        </span>
+                    </div>
                 @endforeach
             </div>
         @endif
@@ -61,15 +66,19 @@
             </h4>
 
             @if(!$ticket->isArchived())
-                <form action="{{ route('message.store', $ticket) }}" method="POST">
+                <form action="{{ route('message.store', $ticket) }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div>
                         <textarea id="message"
                                   name="message"
-                                  class="mt-1 block h-32 w-full rounded-md border-gray-300 shadow-sm focus-within:text-primary-600 focus:border-primary-300 focus:ring-primary-200 focus:ring focus:ring-opacity-50"
+                                  class="ckeditor mt-1 block h-32 w-full rounded-md border-gray-300 shadow-sm focus-within:text-primary-600 focus:border-primary-300 focus:ring-primary-200 focus:ring focus:ring-opacity-50"
                                   required>{{ old('message') }}</textarea>
                         <x-input-error :messages="$errors->get('message')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4">
+                        <input type="file" name="attachments[]" multiple>
                     </div>
 
                     <x-primary-button class="mt-4">
@@ -79,7 +88,22 @@
             @endif
 
             @forelse($ticket->messages as $message)
-                <p class="rounded-lg bg-gray-50 p-3">{{ $message->message }}</p>
+                <div class="rounded-lg bg-white shadow-lg border border-gray-200 pt-3">
+                    <div class="flex items-center border-b border-gray-200 p-3">
+                        <div class="text-md font-bold">
+                            {{ $message->user->name }}
+                        </div>
+                        <div class="px-2">
+                             <span class="text-sm p-1">
+                                تاریخ ایجاد تیکت:
+                             </span>
+                            {{ $message->created_at }}
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        {!! $message->message !!}
+                    </div>
+                </div>
             @empty
                 <p class="text-gray-600">
                     پیامی یافت نشد.
