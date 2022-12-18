@@ -41,7 +41,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
     volumes:
-      - ./:/var/lib/mysql
+      - ./database/mysql:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
@@ -50,7 +50,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
-    depends_on:
+    links:
       - mysql
     environment:
       PMA_HOST: mysql
