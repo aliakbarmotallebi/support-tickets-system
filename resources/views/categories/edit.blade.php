@@ -10,7 +10,7 @@
             @method('PATCH')
 
             <div>
-                <x-input-label for="name" />
+                <x-input-label for="name" >
     نام
                 </x-input-label>
                 <x-text-input type="text"
