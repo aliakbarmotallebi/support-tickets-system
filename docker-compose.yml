@@ -54,6 +54,8 @@ services:
       - mysql
     environment:
       PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     restart: always
     ports:
       - 8085:80
