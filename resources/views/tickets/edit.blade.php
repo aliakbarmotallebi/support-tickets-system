@@ -92,7 +92,9 @@
 اختصاص به
                      </x-input-label>
                 <select name="assigned_to" id="assigned_to" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus-within:text-primary-600 focus:border-primary-300 focus:ring-primary-200 focus:ring focus:ring-opacity-50">
-                    <option value="">-- SELECT USER --</option>
+                        <option value="">
+                            کاربر را انتخاب کنید
+                        </option>
                     @foreach($users as $id => $name)
                         <option value="{{ $id }}" @selected(old('assigned_to', $ticket->assigned_to) == $id)>{{ $name }}</option>
                     @endforeach
