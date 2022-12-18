@@ -10,4 +10,5 @@ RUN docker-php-ext-install bcmath mbstring intl opcache
 RUN docker-php-ext-install pdo pdo_mysql mysqli
 
 
+
 WORKDIR /var/www/html
