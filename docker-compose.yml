@@ -42,8 +42,6 @@ services:
       MYSQL_USER: ${DB_USERNAME}
     ports:
       - "3306:3306"
-    volumes:
-      - ./mysql:/var/lib/mysql
     networks:
       - docker_workspace_network
 
