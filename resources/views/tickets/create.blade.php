@@ -17,7 +17,7 @@
                               name="title"
                               class="block w-full"
                               value="{{ old('title') }}"
-                              required />
+                              />
                 <x-input-error :messages="$errors->get('title')" class="mt-2" />
             </div>
 
