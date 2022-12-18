@@ -34,7 +34,7 @@ services:
 
   mysql:
     image: mysql
-    container_name: db
+    container_name: mysql
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -51,9 +51,9 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: pma
     depends_on:
-      - db
+      - mysql
     environment:
-      PMA_HOST: db
+      PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     restart: always
     ports:
