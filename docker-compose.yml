@@ -50,7 +50,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
-    links:
+    depends_on:
       - mysql
     environment:
       PMA_HOST: mysql
