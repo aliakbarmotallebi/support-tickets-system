@@ -51,7 +51,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: pma
     depends_on:
-      - db
+      - mysql
     links:
       - mysql
     environment:
