@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
              'mobile' => '09306193414',
          ]);
 
-        //  $this->call([
-        //      CategoriesSeeder::class,
-        //      LabelsSeeder::class,
-        //      RolesSeeder::class,
-        //  ]);
+        $this->call([
+              CategoriesSeeder::class,
+              LabelsSeeder::class,
+              RolesSeeder::class,
+          ]);
 
         //  \App\Models\User::factory(10)
         //      ->create()

@@ -10,6 +10,8 @@ docker-compose run npm install
 
 docker-compose run npm run build
 
+chmod -R 777 storage/
+
 docker-compose exec php bash
 
  php artisan key:generate
@@ -17,7 +19,7 @@ docker-compose exec php bash
  php artisan db:seed
 
 
-url phpmyadmin : http://ip:8085
+url phpmyadmin : http://ip:8000
 username:root
-password:root 
+password:root123 
 ```
