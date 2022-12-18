@@ -50,10 +50,13 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
+    depends_on:
+      - db
     links:
       - mysql
     environment:
       PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     restart: always
     ports:
       - 8085:80
