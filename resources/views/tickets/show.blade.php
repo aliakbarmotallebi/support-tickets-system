@@ -35,8 +35,11 @@
 
     <div class="space-y-4">
         <div class="min-w-0 rounded-lg bg-white p-4 shadow-xs">
-            <p class="text-gray-600">
-                {{ $ticket->message }}
+		    <div class="bg-white px-2 py-1 border-b">
+                {{ $ticket->title }}
+            </div>
+            <p class="text-gray-600 px-2 py-3">
+                {!! $ticket->message !!}
             </p>
         </div>
         @if($ticket->getMedia('tickets_attachments')->count())
