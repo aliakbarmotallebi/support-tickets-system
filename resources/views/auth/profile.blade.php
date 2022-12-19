@@ -29,7 +29,9 @@
             @method('PUT')
 
             <div class="mt-4">
-                <x-input-label for="name" :value="نام"/>
+                <x-input-label for="name">
+												نام
+				</x-input-label>
                 <x-text-input type="text"
                          id="name"
                          name="name"
@@ -40,17 +42,21 @@
             </div>
 
             <div class="mt-4">
-                <x-input-label for="email" :value="ایمیل"/>
-                <x-text-input name="email"
-                         type="email"
+                <x-input-label for="mobile" >
+												شماره همراه
+				</x-input-label>
+                <x-text-input name="mobile"
+                         type="text"
                          class="block w-full"
-                         value="{{ old('email', auth()->user()->email) }}"
+                         value="{{ old('mobile', auth()->user()->mobile) }}"
                          required/>
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
             </div>
 
             <div class="mt-4">
-                <x-input-label for="password" :value="گذرواژه جدید"/>
+                <x-input-label for="password">
+								گذرواژه جدید
+				</x-input-label>
                 <x-text-input type="password"
                          name="password"
                          class="block w-full" />
@@ -58,7 +64,9 @@
             </div>
 
             <div class="mt-4">
-                <x-input-label id="password_confirmation" :value="تایید گذارواژه"/>
+                <x-input-label id="password_confirmation">
+				تایید گذارواژه
+				</x-input-label>
                 <x-text-input type="password"
                          name="password_confirmation"
                          class="block w-full" />
