@@ -17,9 +17,9 @@ class TelegramBot
     public function send()
     {
 
-        $url  = "https://api.telegram.org/bot/".$this->getToken();
+        $url  = "https://api.telegram.org/bot".$this->getToken();
         $url .= "/".$this->getMethod()."?chat_id=".$this->getChatId()."&text=".urlencode($this->getText())."&parse_mode=HTML";
-        return $url;
+
         $ch = curl_init();
         $optArray = array(
                 CURLOPT_URL => $url,
