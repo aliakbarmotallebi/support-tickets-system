@@ -113,7 +113,9 @@ class TicketController extends Controller
             User::find($request->input('assigned_to'))->notify(new AssignedTicketNotification($ticket));
         }
 
-        if (!is_null($request->input('attachments')[0])) {
+        $at = $request->input('attachments')[0] ?? NULL;
+
+        if (!is_null($at)) {
 
             foreach ($request->input('attachments') as $file) {
                 $ticket->addMediaFromDisk($file, 'public')->toMediaCollection('tickets_attachments');
