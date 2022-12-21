@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Validation\Rules\Enum;
-use Coderflex\LaravelTicket\Enums\Status;
+use App\Enums\Status;
 use Illuminate\Foundation\Http\FormRequest;
 use Coderflex\LaravelTicket\Enums\Priority;
 

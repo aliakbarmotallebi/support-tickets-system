@@ -14,10 +14,15 @@ class MessageController extends Controller
     public function store(MessageRequest $request, Ticket $ticket): RedirectResponse
     {
         
-
         $message = $ticket->messages()->create(
             ['message' => $request->message] + 
             ['user_id' => auth()->user()->id]);
+
+        $status='open';
+        if(auth()->user()->hasRole('admin', 'web')){
+            $status='solved';
+        }
+        $ticket->update(['status' => $status]);
 
         if (!is_null($request->input('attachments'))) {
 

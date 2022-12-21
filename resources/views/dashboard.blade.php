@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Dashboard') }}
+         سامانه تیکت کاربران 
     </x-slot>
 
     <div class="mb-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -60,4 +60,101 @@
                 </div>
             </a>
         </div>
+    </div>
+
+<div class='flex flex-col bg-white border-t rounded-lg border border-gray-200' >
+    <div class="flex items-center justify-between px-6 -mb-px border-b border-gray-200">
+        <h3 class="text-blue-dark py-4 font-normal text-lg">
+             آخرین تیکت های ارسالی
+        </h3>
+    </div>
+    <div class="w-full {% block class_content %}{% endblock %}">
+           <div class="w-full overflow-x-auto">
+        <table class="w-full whitespace-no-wrap">
+            <thead>
+                <tr class="border-b bg-gray-50 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    <th class="px-4 py-3">عنوان</th>
+                    <th class="px-4 py-3">کاربر</th>
+                    <th class="px-4 py-3">وضعیت</th>
+                    <th class="px-4 py-3">اولیت</th>
+                    <th class="px-4 py-3">دسته بندی</th>
+                    <th class="px-4 py-3">برچسب ها</th>
+                    <th class="px-4 py-3">تاریخ بروزرسانی</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y">
+                @forelse($tickets as $ticket)
+                    <tr class="text-gray-700">
+                        <td class="px-4 py-3 text-sm">
+                            <a href="{{ route('tickets.show', $ticket) }}" class="hover:underline">{{ $ticket->title }}</a>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            {{ $ticket->user->name }}
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            @if ($ticket->status == 'closed')
+                                <span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                                {{ $ticket->getStatusText() }}
+                                </span>
+                            @elseif ($ticket->status == 'open')
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                                {{ $ticket->getStatusText() }}
+                                </span>
+                            @elseif ($ticket->status == 'solved')
+                                <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                {{ $ticket->getStatusText() }}
+                                </span>
+                            @elseif ($ticket->status == 'new')
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">
+                                {{ $ticket->getStatusText() }}
+                                </span>
+                            @endif
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            @if ($ticket->priority == 'low')
+                                <span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                                {{ $ticket->getPriorityText() }}
+                                </span>
+                            @elseif ($ticket->priority == 'high')
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                                {{ $ticket->getPriorityText() }}
+                                </span>
+                            @elseif ($ticket->priority == 'normal')
+                                <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                {{ $ticket->getPriorityText() }}
+                                </span>
+                            @endif
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            @foreach($ticket->categories as $category)
+                                <span class="rounded-full bg-gray-50 px-2 py-2">{{ $category->name }}</span>
+                            @endforeach
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            @foreach($ticket->labels as $label)
+                                <span class="rounded-full bg-gray-50 px-2 py-2">{{ $label->name }}</span>
+                            @endforeach
+                        </td>
+
+                                                        <td class="px-4 py-3 text-sm">
+                            {{ verta($ticket->updated_at) }}
+                        </td>
+
+                    </tr>
+                @empty
+                    <tr>
+                        <td class="px-4 py-3" colspan="4">
+                            تیکتی یافت نشد.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+
+
+
 </x-app-layout>

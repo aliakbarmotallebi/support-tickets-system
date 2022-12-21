@@ -52,7 +52,8 @@ class TicketController extends Controller
 
     public function store(TicketRequest $request)
     {
-    
+        $request['status'] = 'new';
+
         $ticket = auth()->user()->tickets()->create($request->only('title', 'message', 'status', 'priority'));
 
         $ticket->attachCategories($request->input('categories'));

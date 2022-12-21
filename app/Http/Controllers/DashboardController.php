@@ -12,7 +12,7 @@ class DashboardController extends Controller
         $totalTickets = Ticket::count();
         $openTickets = Ticket::opened()->count();
         $closedTickets = Ticket::closed()->count();
-
-        return view('dashboard', compact('totalTickets', 'openTickets', 'closedTickets'));
+        $tickets = Ticket::whereUserId(auth()->user()->id)->latest()->get();
+        return view('dashboard', compact('totalTickets', 'openTickets', 'closedTickets', 'tickets'));
     }
 }

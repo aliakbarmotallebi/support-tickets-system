@@ -12,7 +12,7 @@
                 <option value="{{ clearQueryString('status') }}">
                     انتخاب وضعیت
                 </option>
-                @foreach(\Coderflex\LaravelTicket\Enums\Status::cases() as $status)
+                @foreach(\App\Enums\Status::cases() as $status)
                     <option value="{{ toggle('status', $status->value) }}" @selected($status->value == request('status'))>{{ $status->name }}</option>
                 @endforeach
             </select>
@@ -49,12 +49,14 @@
                             <th class="px-4 py-3">وضعیت</th>
                             <th class="px-4 py-3">اولیت</th>
                             <th class="px-4 py-3">دسته بندی</th>
-                            <th class="px-4 py-3">برپسب ها</th>
+                            <th class="px-4 py-3">برچسب ها</th>
                             @hasanyrole('admin|agent')
                                 <th class="px-4 py-3">
                                 اختصاص به
                                 </th>
                             @endhasanyrole
+                            <th class="px-4 py-3">تاریخ بروزرسانی</th>
+                            <th class="px-4 py-3">تاریخ ایجاد</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -68,10 +70,38 @@
                                     {{ $ticket->user->name }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $ticket->status }}
+                                    @if ($ticket->status == 'closed')
+                                        <span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                                        {{ $ticket->getStatusText() }}
+                                        </span>
+                                    @elseif ($ticket->status == 'open')
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                                        {{ $ticket->getStatusText() }}
+                                        </span>
+                                    @elseif ($ticket->status == 'solved')
+                                        <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                        {{ $ticket->getStatusText() }}
+                                        </span>
+                                    @elseif ($ticket->status == 'new')
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">
+                                        {{ $ticket->getStatusText() }}
+                                        </span>
+                                    @endif
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $ticket->priority }}
+                                    @if ($ticket->priority == 'low')
+                                        <span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                                        {{ $ticket->getPriorityText() }}
+                                        </span>
+                                    @elseif ($ticket->priority == 'high')
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                                        {{ $ticket->getPriorityText() }}
+                                        </span>
+                                    @elseif ($ticket->priority == 'normal')
+                                        <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                        {{ $ticket->getPriorityText() }}
+                                        </span>
+                                    @endif
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     @foreach($ticket->categories as $category)
@@ -88,6 +118,12 @@
                                         {{ $ticket->assignedToUser->name ?? '' }}
                                     </td>
                                 @endhasanyrole
+                                                                <td class="px-4 py-3 text-sm">
+                                    {{ verta($ticket->updated_at) }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ verta($ticket->created_at) }}
+                                </td>
                                 <td class="px-4 py-3 space-x-2 space-x-reverse">
                                     @hasanyrole('admin|agent')
                                         <a class="rounded-lg border-2 border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600" href="{{ route('tickets.edit', $ticket) }}">
