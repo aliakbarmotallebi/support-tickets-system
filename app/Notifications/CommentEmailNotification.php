@@ -23,7 +23,7 @@ class CommentEmailNotification extends Notification
             ->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
             ->setMethod('sendMessage')
             ->setChatId('-1001490183979')
-            ->setText('New comment on ticket ' . $this->message->ticket->title. "\n comment: ". $this->message->message ."\n by Username: " . $this->ticket->user->name)
+            ->setText('New comment on ticket ' . $this->message->ticket->title. "\n comment: ". $this->message->message ."\n by Username: " . $this->message->ticket->user->name)
             ->send();
     }
 
