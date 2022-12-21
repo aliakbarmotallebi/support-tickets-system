@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Ticket;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
+use App\Services\TelegramBot;
 
 class NewTicketCreatedNotification extends Notification
 {
@@ -12,20 +12,17 @@ class NewTicketCreatedNotification extends Notification
 
     public function via($notifiable): array
     {
-        if (config('app.enable_notifications')) {
-            return ['mail'];
-        }
-
-        return [];
+        return ['telegramBot'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail($notifiable)
     {
-        return (new MailMessage)
-            ->subject('New ticket')
-            ->line('New ticket have been created: ' . $this->ticket->title)
-            ->action('View ticket', route('tickets.show', $this->ticket))
-            ->line('Thank you!');
+        return (new TelegramBot)
+			->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
+			->setMethod('sendMessage')
+			->setChatId('-1001490183979')
+			->setText('New ticket have been created: ' . $this->ticket->title . "\n by Username: " . $this->ticket->user->name)
+			->send();
     }
 
     public function toArray($notifiable): array

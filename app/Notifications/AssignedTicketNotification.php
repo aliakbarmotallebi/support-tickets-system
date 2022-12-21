@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Coderflex\LaravelTicket\Models\Ticket;
-use Illuminate\Notifications\Messages\MailMessage;
+use App\Services\TelegramBot;
 
 class AssignedTicketNotification extends Notification
 {
@@ -12,20 +12,17 @@ class AssignedTicketNotification extends Notification
 
     public function via($notifiable): array
     {
-        if (config('app.enable_notifications')) {
-            return ['mail'];
-        }
-
-        return [];
+        return ['telegramBot'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toTelegramBot($notifiable)
     {
-        return (new MailMessage)
-            ->subject('You have been assigned a new ticket')
-            ->line('You have been assigned a new ticket: ' . $this->ticket->title)
-            ->action('View ticket', route('tickets.show', $this->ticket))
-            ->line('Thank you!');
+        return (new TelegramBot)
+			->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
+			->setMethod('sendMessage')
+			->setChatId('-1001490183979')
+			->setText('New ticket have been created: ' . $this->ticket->title . "\n by Username: " . $this->ticket->user->name)
+			->send();
     }
 
     public function toArray($notifiable): array

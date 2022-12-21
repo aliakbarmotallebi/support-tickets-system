@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Coderflex\LaravelTicket\Models\Message;
-use Illuminate\Notifications\Messages\MailMessage;
+use App\Services\TelegramBot;
 
 class CommentEmailNotification extends Notification
 {
@@ -13,21 +13,17 @@ class CommentEmailNotification extends Notification
 
     public function via($notifiable): array
     {
-        if (config('app.enable_notifications')) {
-            return ['mail'];
-        }
-
-        return [];
+        return ['telegramBot'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail($notifiable)
     {
-        return (new MailMessage)
-            ->subject('New comment on ticket ' . $this->message->ticket->title)
-            ->line('New comment on ticket '.$this->message->ticket->title . ':')
-            ->line($this->message->message)
-            ->action('View full ticket', route('tickets.show', $this->message->ticket))
-            ->line('Thank you!');
+        return (new TelegramBot)
+            ->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
+            ->setMethod('sendMessage')
+            ->setChatId('-1001490183979')
+            ->setText('New comment on ticket ' . $this->message->ticket->title. "\n comment: ". $this->message->message ."\n by Username: " . $this->ticket->user->name)
+            ->send();
     }
 
     public function toArray($notifiable): array
