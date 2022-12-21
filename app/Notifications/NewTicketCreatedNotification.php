@@ -16,7 +16,7 @@ class NewTicketCreatedNotification extends Notification
         return [TelegramCahnnel::class];
     }
 
-    public function toMail($notifiable)
+    public function toTelegramBot($notifiable)
     {
         return (new TelegramBot)
 			->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
