@@ -31,9 +31,7 @@ class MessageController extends Controller
             }
         }
         
-        User::role('admin')
-            ->each(fn ($user) => $user->notify(new CommentEmailNotification($message)));
-
+        Notification::send(User::find(1), new CommentEmailNotification($message));
 
         return to_route('tickets.show', $ticket);
     }
