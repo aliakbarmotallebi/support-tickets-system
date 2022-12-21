@@ -2,9 +2,11 @@
 
 namespace App\Notifications;
 
+use App\Channels\TelegramCahnnel;
 use Illuminate\Notifications\Notification;
 use Coderflex\LaravelTicket\Models\Ticket;
 use App\Services\TelegramBot;
+
 
 class AssignedTicketNotification extends Notification
 {
@@ -12,7 +14,7 @@ class AssignedTicketNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['telegramBot'];
+        return [TelegramCahnnel::class];
     }
 
     public function toTelegramBot($notifiable)

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Channels\TelegramCahnnel;
 use App\Models\Ticket;
 use Illuminate\Notifications\Notification;
 use App\Services\TelegramBot;
@@ -12,7 +13,7 @@ class NewTicketCreatedNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['telegramBot'];
+        return [TelegramCahnnel::class];
     }
 
     public function toMail($notifiable)

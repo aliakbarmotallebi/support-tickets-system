@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Channels\TelegramCahnnel;
 use Illuminate\Notifications\Notification;
 use Coderflex\LaravelTicket\Models\Message;
 use App\Services\TelegramBot;
@@ -13,7 +14,7 @@ class CommentEmailNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['telegramBot'];
+        return [TelegramCahnnel::class];
     }
 
     public function toMail($notifiable)
