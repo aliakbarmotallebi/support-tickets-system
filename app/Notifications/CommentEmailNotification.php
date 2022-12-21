@@ -23,7 +23,7 @@ class CommentEmailNotification extends Notification
             ->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
             ->setMethod('sendMessage')
             ->setChatId('-1001490183979')
-            ->setText('Replay comment on ticket ' . $this->message->ticket->title. "\n comment: ". $this->message->message)
+            ->setText('Replay comment on ticket ' . $this->message->ticket->title. "\n comment: ". $this->message->ticket_id)
             ->send();
     }
 
