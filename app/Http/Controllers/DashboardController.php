@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $openTickets = Ticket::opened()->count();
         $closedTickets = Ticket::closed()->count();
 
-        (new TelegramBot)
+        return (new TelegramBot)
             ->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
             ->setMethod('sendMessage')
             ->setChatId('-1001490183979')
