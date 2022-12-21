@@ -23,7 +23,7 @@ class AssignedTicketNotification extends Notification
 			->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
 			->setMethod('sendMessage')
 			->setChatId('-1001490183979')
-			->setText('New ticket have been created: ' . $this->ticket->title . "\n by Username: " . $this->ticket->user->name)
+			->setText('New ticket have been created: ' . $this->ticket->title . "\n by Username: " . $this->ticket->user->name . "\n You have been assigned a new ticket: ". $this->ticket->assigned_to)
 			->send();
     }
 

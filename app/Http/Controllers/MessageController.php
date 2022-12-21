@@ -26,13 +26,9 @@ class MessageController extends Controller
             }
         }
         
-        $users = $ticket->messages()
-            ->pluck('user_id')
-            ->push($ticket->user_id)
-            ->filter(fn ($user) => $user != auth()->user()->id)
-            ->unique();
+        User::role('admin')
+            ->each(fn ($user) => $user->notify(new CommentEmailNotification($message)));
 
-        Notification::send(User::findMany($users), new CommentEmailNotification($message));
 
         return to_route('tickets.show', $ticket);
     }
