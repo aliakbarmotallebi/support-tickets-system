@@ -140,7 +140,7 @@
                                             </x-primary-button>
                                         </form>
                                     @endrole
-                                    <a href="{{ route('tickets.show', $ticket) }}" class="hover:underline mr-1">
+                                    <a href="{{ route('tickets.show', $ticket) }}" class="underline mr-1 text-blue-300 text-sm">
                                         نمایش گفتگو
                                     </a>
 
