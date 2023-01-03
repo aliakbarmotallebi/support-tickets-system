@@ -19,12 +19,12 @@ class CommentEmailNotification extends Notification
 
     public function toTelegramBot($notifiable)
     {
-        return (new TelegramBot)
-            ->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
-            ->setMethod('sendMessage')
-            ->setChatId('-1001490183979')
-            ->setText('Replay comment on ticket ' . $this->message->ticket->title. "\n comment: ". strip_tags($this->message->message))
-            ->send();
+        //return (new TelegramBot)
+            //->setToken('569740318:AAFJU5LkwbIRC6ABfCz-ri7gbA0ojwbqfe4')
+            //->setMethod('sendMessage')
+            //->setChatId('-1001490183979')
+            //->setText('Replay comment on ticket ' . $this->message->ticket->title. "\n comment: ". strip_tags($this->message->message))
+            //->send();
     }
 
     public function toArray($notifiable): array
