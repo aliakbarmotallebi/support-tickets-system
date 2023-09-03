@@ -1,0 +1,17 @@
+@import url('./font.css');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import "filepond/dist/filepond.min.css";
+
+@layer base {
+    body {
+        @apply font-pelak;
+    }
+}
+
+.ck-editor__editable_inline {
+    min-height: 250px;
+}
+
