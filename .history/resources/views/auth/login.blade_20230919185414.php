@@ -18,8 +18,8 @@
             <form method="POST" action="{{ route('login') }}">
                     @csrf
                 <div class="w-full flex flex-col items-center p-10" >
-                    <a href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" class="fill-gray-900"
+                    <div class="ml-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="#000"
                             viewBox="0 0 32 32">
                             <g clip-path="url(#a)">
                                 <path fill="#2563EB"
@@ -33,28 +33,25 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                    </a>
+                    </div>
                     <!-- text login -->
-                    <h1 class="text-center text-2xl font-bold text-white">
+                    <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">
                         ورود به حساب کاربری
                     </h1>
-                    <div class="text-white mb-10">
-                        سامانه ورود تیم برنامه نویسی فراکد
-                    </div>
                     <!-- email input -->
                     <div class="w-3/4 mb-6">
-                        <input type="text" name="mobile" id="mobile" class="w-full text-right py-4 px-8 bg-black/20 placeholder:text-black/50 border-0 placeholder:font-semibold rounded hover:ring-1 outline-black/20" placeholder="شماره همراه">
+                        <input type="text" name="mobile" id="mobile" class="w-full text-right py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 outline-blue-500" placeholder="شماره همراه">
                         <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
                     </div>
                     <!-- password input -->
                     <div class="w-3/4 mb-6">
-                        <input type="password" name="password" id="password" class="w-full text-right py-4 px-8 bg-black/20 placeholder:text-black/50 border-0 placeholder:font-semibold rounded hover:ring-1 outline-black/20 " placeholder="گذرواژه">
+                        <input type="password" name="password" id="password" class="w-full text-right py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 outline-blue-500 " placeholder="گذرواژه">
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
                     <!-- remember input -->
-                    <div class="w-3/4 flex flex-row justify-between  text-right py-5">
+                    <div class="w-3/4 flex flex-row justify-between  text-right">
                         <div class=" flex items-center gap-x-1 text-right">
-                            <label for="" class="text-sm text-white">
+                            <label for="" class="text-sm text-slate-400">
                                 مرا بخاطر بسپار؟
                             </label>
                             <input type="checkbox" name="remember" id="" class=" w-4 h-4  ">
@@ -62,7 +59,7 @@
                     </div>
                     <!-- button -->
                     <div class="w-3/4 mt-4">
-                        <button type="submit" class="py-4 bg-white w-full rounded text-blue-600 font-bold hover:opacity-50"> 
+                        <button type="submit" class="py-4 bg-blue-400 w-full rounded text-blue-50 font-bold hover:bg-blue-700"> 
                             ورود به حساب
                         </button>
                     </div>

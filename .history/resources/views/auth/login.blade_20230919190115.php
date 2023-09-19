@@ -18,7 +18,7 @@
             <form method="POST" action="{{ route('login') }}">
                     @csrf
                 <div class="w-full flex flex-col items-center p-10" >
-                    <a href="/">
+                    <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" class="fill-gray-900"
                             viewBox="0 0 32 32">
                             <g clip-path="url(#a)">
@@ -33,7 +33,7 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                    </a>
+                    </div>
                     <!-- text login -->
                     <h1 class="text-center text-2xl font-bold text-white">
                         ورود به حساب کاربری
